@@ -8,7 +8,6 @@ export default function useUserDetails() {
   useEffect(() => {
     (async () => {
       try {
-        // setLoading(true)
         const result = await userApi.getAll();
         setUsers(result);
       } catch (error) {
@@ -18,5 +17,5 @@ export default function useUserDetails() {
     })();
   }, []);
 
-  return { users, loadingUser, setUsers };
+  return { users, loadingUser };
 }

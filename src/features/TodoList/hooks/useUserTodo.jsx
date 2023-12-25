@@ -18,5 +18,5 @@ export default function useUserTodo(userId) {
       })();
     }, 1000);
   }, [userId]);
-  return { todo, setTodo, loading, setLoading };
+  return { todo, setTodo, loading };
 }
