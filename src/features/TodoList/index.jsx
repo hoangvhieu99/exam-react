@@ -8,7 +8,7 @@ const { Option } = Select;
 const TodoList = () => {
   const { users } = useUserDetails();
   const [userId, setUserId] = useState(null);
-  const { todo, setTodo } = useUserTodo(userId);
+  const { todo, loading } = useUserTodo(userId);
 
   const onChange = (selectedUserId) => {
     setUserId(selectedUserId);
@@ -36,7 +36,7 @@ const TodoList = () => {
         ))}
       </Select>
       <DividerComponent title="Tasks" />
-      <TodoListComponent todo={todo} setTodo={setTodo} />
+      <TodoListComponent todo={todo} loading={loading} />
     </>
   );
 };

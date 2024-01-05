@@ -1,12 +1,16 @@
 import { CheckCircleTwoTone, MinusSquareTwoTone } from "@ant-design/icons";
 import { Button, List, Space, Typography } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const TodoListComponent = ({ todo, setTodo }) => {
+const TodoListComponent = ({ todo, loading }) => {
   const [loadings, setLoadings] = useState([]);
-  const doneTask = todo.filter((item) => item.completed).length;
-  const totalTask = todo.length;
-  const sortedData = todo.slice().sort((a, b) => {
+  const [newTodo, setNewTodo] = useState([]);
+  useEffect(() => {
+    setNewTodo(todo);
+  }, [todo]);
+  const doneTask = newTodo.filter((item) => item.completed).length;
+  const totalTask = newTodo.length;
+  const sortedData = newTodo.slice().sort((a, b) => {
     if (a.completed === b.completed) {
       return 0; // Giữ nguyên vị trí nếu cả hai có cùng giá trị completed
     }
@@ -24,8 +28,8 @@ const TodoListComponent = ({ todo, setTodo }) => {
         newLoadings[loadingId] = false;
         return newLoadings;
       });
-      setTodo(
-        todo.map((t) => {
+      setNewTodo(
+        newTodo.map((t) => {
           if (t.id === loadingId) {
             return {
               ...t,
@@ -44,6 +48,7 @@ const TodoListComponent = ({ todo, setTodo }) => {
         className="overflow-auto"
         style={{ height: "500px" }}
         bordered
+        loading={loading ? loading : false}
         dataSource={sortedData}
         renderItem={(item) => (
           <List.Item
@@ -73,6 +78,7 @@ const TodoListComponent = ({ todo, setTodo }) => {
           </List.Item>
         )}
       />
+
       <Typography className="mt-2">
         Done {doneTask}/{totalTask} tasks
       </Typography>
